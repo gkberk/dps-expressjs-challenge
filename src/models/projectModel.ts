@@ -16,6 +16,7 @@ export const readProjectById = (id: string) => {
 	return db.query(sql, { id })[0] as Project;
 };
 
+// Partial update possible.
 export const updateProjectById = (
 	id: string,
 	name?: string,

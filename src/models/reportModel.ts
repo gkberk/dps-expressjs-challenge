@@ -16,6 +16,7 @@ export const readReportById = (id: string) => {
 	return db.query(sql, { id })[0] as Report;
 };
 
+// Partial update possible
 export const updateReportById = (
 	id: string,
 	text: string,

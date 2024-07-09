@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Project } from '../types/project';
+import { Report } from '../types/report';
 import {
 	insertProject,
 	readProjectById,
@@ -7,7 +8,10 @@ import {
 	deleteProjectById,
 	getAllProjects,
 } from '../models/projectModel';
-import { deleteReportsByProjectId } from '../models/reportModel';
+import {
+	deleteReportsByProjectId,
+	getReportsByProjectId,
+} from '../models/reportModel';
 
 export const createProject = async (req: Request, res: Response) => {
 	try {
@@ -19,6 +23,7 @@ export const createProject = async (req: Request, res: Response) => {
 	}
 };
 
+// Returns project with all of its reports.
 export const getProject = async (req: Request, res: Response) => {
 	const { id } = req.body;
 	try {
@@ -26,6 +31,8 @@ export const getProject = async (req: Request, res: Response) => {
 		if (!project) {
 			res.status(404).json({ error: `Project ${id} not found` });
 		}
+		const reports: Report[] = getReportsByProjectId(id);
+		project['reports'] = reports;
 		res.status(200).json({
 			message: `Project ${project.id} fetched.`,
 			project,
@@ -44,6 +51,7 @@ export const listProjects = async (req: Request, res: Response) => {
 	}
 };
 
+// Checks if the project exists first, then updates
 export const updateProject = async (req: Request, res: Response) => {
 	try {
 		const { id, name, description } = req.body;

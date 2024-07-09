@@ -13,6 +13,7 @@ import {
 } from '../models/reportModel';
 import { readProjectById } from '../models/projectModel';
 
+// Checks if there is a project with the given projectid first. Then creates.
 export const createReport = async (req: Request, res: Response) => {
 	try {
 		const { text, projectid } = req.body;
@@ -54,6 +55,7 @@ export const listReports = async (req: Request, res: Response) => {
 	}
 };
 
+// Checks if the report exists first. Then updates.
 export const updateReport = async (req: Request, res: Response) => {
 	try {
 		const { id, text, project_id } = req.body;
@@ -82,6 +84,7 @@ export const deleteReport = async (req: Request, res: Response) => {
 	}
 };
 
+// Returns all reports of a project.
 export const getReportsOfProject = async (req: Request, res: Response) => {
 	try {
 		const { projectid } = req.body;
@@ -100,6 +103,8 @@ export const getReportsOfProject = async (req: Request, res: Response) => {
 		res.status(500).json({ error: `Server error.` });
 	}
 };
+
+// Deletes all reports of a project.
 export const deleteReportsOfProject = async (req: Request, res: Response) => {
 	try {
 		const { projectid } = req.body;
@@ -116,6 +121,7 @@ export const deleteReportsOfProject = async (req: Request, res: Response) => {
 	}
 };
 
+// Returns all reports that contain a given word for more than 3 times.
 export const getSpecialReports = async (req: Request, res: Response) => {
 	try {
 		const { word } = req.body;
